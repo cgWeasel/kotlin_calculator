@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     var curNumStr: String = "" // current number in String
     var curNumD: Double = 0.0 // current number converted from String to Double
     var curResult: Double = 0.0 // current Result
+    var newCalc: Boolean = false // check if the equale was pressed
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
 
     /**
-     * Append the Button.text to the TextView
+     * Insert Numbers
      */
     fun onDigit(view: View) {
         if (lastNumeric || lastDot) {
@@ -31,15 +32,18 @@ class MainActivity : AppCompatActivity() {
         } else {
             textView.text = (view as Button).text
         }
+
         lastNumeric = true
     }
 
     /**
-     * Append . to the TextView
+     * Insert Dot
      */
     fun onDecimalPoint(view: View) {
         if (lastNumeric && !lastDot) {
             textView.append(".")
+            textView_history.append((view as Button).text)
+
             lastNumeric = false
             lastDot = true
         }
@@ -51,6 +55,13 @@ class MainActivity : AppCompatActivity() {
     fun calcOperators() {
         curNumStr = textView.text.toString()
         curNumD = curNumStr.toDouble()
+
+        if (newCalc){
+            textView_history.text = curNumStr
+            newCalc = false
+        } else {
+            textView_history.append(curNumStr)
+        }
 
         when(lastOp) {
             "+" -> curResult = curResult + curNumD
@@ -70,10 +81,23 @@ class MainActivity : AppCompatActivity() {
             calcOperators()
             lastOp = (view as Button).text.toString()
             textView.text = curResult.toString()
+            textView_history.append((view as Button).text)
+
             lastNumeric = false
             lastDot = false    // Reset the DOT flag
         }
     }
+
+    /**
+     * Remove last Character
+     */
+
+    fun onDelete(view: View){
+        if (lastNumeric || lastDot){
+            textView.text = textView.text.dropLast(1)
+        }
+    }
+
 
     /**
      * Reset Variables
@@ -91,16 +115,18 @@ class MainActivity : AppCompatActivity() {
      */
     fun onClear(view: View) {
         textView.text = ""
+        textView_history.text = ""
         reset()
     }
 
     /**
-     * Calculate Resust and Reset Variables
+     * Calculate Result and Reset Variables
      */
     fun onEqual(view: View) {
         if (lastNumeric) {
             calcOperators()
             textView.text = curResult.toString()
+            newCalc = true
             reset()
         }
     }

@@ -9,10 +9,10 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         android:background="#686666"
         android:ems="10"
-        android:gravity="right|center_vertical"
+        android:gravity="end|center_vertical"
         android:maxLength="12"
         android:text=""
         android:textAlignment="viewEnd"
@@ -21,7 +21,7 @@
         app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/textView_history" />
 
     <TableLayout
         android:id="@+id/tableLayout"
@@ -213,13 +213,41 @@
 
             <Button
                 android:id="@+id/bClear"
+                style="@style/clearButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onClear"
                 android:text="CE" />
+
+            <Button
+                android:id="@+id/bDel"
+                style="@style/clearButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="onDelete"
+                android:text="DEL" />
         </TableRow>
 
     </TableLayout>
+
+    <TextView
+        android:id="@+id/textView_history"
+        style="@style/NumberButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="1dp"
+        android:background="#333"
+        android:ems="10"
+        android:gravity="end|center_vertical"
+        android:text=""
+        android:textAlignment="viewEnd"
+        android:textColor="#DDDDDD"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
